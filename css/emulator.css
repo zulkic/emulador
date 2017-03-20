@@ -1,0 +1,10 @@
+.bside {  
+    height: 500px !important;
+    overflow: scroll;
+}
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+.table-text-center th, .table-text-center td {
+    text-align: center;
+}

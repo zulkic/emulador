@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Emulador</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/emulator.css">
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="" href="#">
+                    <img src="/img/logoIcc.jpg" alt="Ingenieria Civil En Computacion" style="width:105px;height:44px;border:0;">
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="btn" data-toggle="modal" onclick="recargar()">Reiniciar</a></li>
+                    <li><a class="btn" data-toggle="modal" onclick="recargarRegistros()">Reiniciar Registros</a></li>
+                    <li><a class="btn" data-toggle="modal" onclick="ejecutarTodo()">Ejecutar Todo</a></li>
+                    <li><a class="btn" data-toggle="modal" href='#cargar_archivo'>Cargar Archivo</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <section id="services" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Program Counter</h5>
+                            <input type="text" name="pc" id="pc" class="form-control" value="0" disabled="true">
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Instruction Register</h5>
+                            <input type="text" name="ir" id="ir" class="form-control" value="" disabled="true">
+                        </div>
+                        <div class="col-md-4 ">
+                            <h5>&nbsp&nbsp</h5>
+                            <button type="button" class="btn  btn-success" onclick="processing()">Ejecutar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>Flags</h4>
+
+                            <div class="form-group">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>N</th>
+                                            <th>Z</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id='N'>0</td>
+                                            <td id='Z'>0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <h4>Registers</h4>
+                                <div class="table-responsive">
+                                    <table id="registros" class="table table-condensed  table-striped table-text-center ">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Valor</th>
+                                                <th>#</th>
+                                                <th>Valor</th>
+                                                <th>#</th>
+                                                <th>Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div class="col-md-4">
+                    <h4>Assembler</h4>
+                    <div class="bside">
+                        <div class="pull-center">
+                            <table id="assambler" class="table table-bordered table-condensed table-text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Dir</th>
+                                        <th>Nemonico</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div class="col-md-3">
+                    <h4>Memory</h4>
+                    <div class="bside">
+                        <div class="pull-center">
+                            <table  id="example3" class="table table-bordered table-condensed table-text-center table-text-center ">
+                                <thead>
+                                    <tr>
+                                        <th>Dir</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+            </div>
+        </div>
+    </section><!--/#services-->
+    <div class="modal fade" id="changeMemory" tabindex="-1" role="dialog" aria-labelledby="changeMemoryLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <a type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+            <h4 class="modal-title" id="changeMemoryLabel">Cambiar valor en memoria</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+              <input type="hidden" name="position-name" id="position-name" class="form-control" value="">
+              <label for="valor-name" class="control-label">Valor:</label>
+              <input type="text" class="form-control" name="valor-name" id="valor-name">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <a type="button" class="btn btn-primary" onclick="cambiarMemoria()">Cambiar Valor</a>
+    </div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="cargar_archivo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cargar Archivo</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" name="texto" value="" id="texto"/>
+                    <label for="exampleInputFile">Selecciona archivo</label>
+                    <input type="file" id="exampleInputFile" name="exampleInputFile" onchange="openFile(event)">
+                    <p class="help-block">Selecciona el archivo txt de tu computadora</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="cerrarPopup()">Cargar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-1.12.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/emulator.js"></script>
+</body>
+</html>
+
